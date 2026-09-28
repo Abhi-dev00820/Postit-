@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postit - Create Post</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+        <nav class="navbar">
+
+    <div class="nav-brand">
+        <a href="{{ url_for('index') }}">Postit</a>
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('index') }}">
+            Home
+        </a>
+
+        <a href="{{ url_for('messages') }}">
+            Messages
+        </a>
+
+        <a href="{{ url_for('profile', user_id=session['user_id']) }}">
+    Profile
+</a>
+
+    </div>
+
+</nav>
+    <div class="Create Post">
+    <h1> Posit - Create a Post </h1>
+
+    <!--Post Form-->
+
+    <form method = "POST" action="{{ url_for('createpost') }}" >
+        <h2>Username</h2>
+        <input type="text" name = "PostText" placeholder="Create a Post">
+
+        <input type="submit" value="CreatePost">
+
+    </form>
+    {% with messages = get_flashed_messages() %}
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+{% endwith %}
+
+
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Postit - Messages</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="nav-brand">
+            <a href="{{ url_for('index') }}">Postit</a>
+        </div>
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('index') }}">
+                Home
+            </a>
+
+            <a href="{{ url_for('createpost') }}">
+                Create Post
+            </a>
+
+            <a href="{{ url_for('profile', user_id=session['user_id']) }}">
+                Profile
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <div class="messages-container">
+
+        <h1>Messages</h1>
+
+
+        <!-- Start New Chat -->
+
+        <div class="new-message">
+
+            <h2>Start a New Chat</h2>
+
+            <input
+                type="number"
+                id="userId"
+                placeholder="Enter User ID"
+            >
+
+            <button type="button" onclick="startChat()">
+                Chat
+            </button>
+
+        </div>
+
+
+        <!-- Messages -->
+
+        <div class="chat-list">
+
+            {% for message in messages %}
+
+            {% if message.sender_id == session['user_id'] %}
+
+            <!-- Your message -->
+
+            <a href="{{ url_for('chat', user_id=message.receiver_id) }}" class="chat">
+
+                <div class="chat-user">
+                    You
+                </div>
+
+                <div class="last-message">
+                    You: {{ message.content }}
+                </div>
+
+                <div class="message-time">
+                    {{ message.created_at }}
+                </div>
+
+            </a>
+
+            {% else %}
+
+            <!-- Other person's message -->
+
+            <a href="{{ url_for('chat', user_id=message.sender_id) }}" class="chat">
+
+                <div class="chat-user">
+                    @{{ message.sender.username }}
+                </div>
+
+                <div class="last-message">
+                    {{ message.sender.username }}: {{ message.content }}
+                </div>
+
+                <div class="message-time">
+                    {{ message.created_at }}
+                </div>
+
+            </a>
+
+            {% endif %}
+
+            {% else %}
+
+            <p>No conversations yet.</p>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        function startChat() {
+
+            const userId = document.getElementById("userId").value;
+
+            if (userId === "") {
+                return;
+            }
+
+            window.location.href = "/messages/" + userId;
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ user.username }} - Profile</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+    <div class="nav-brand">
+        <a href="{{ url_for('index') }}">Postit</a>
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('index') }}">
+            Home
+        </a>
+
+        <a href="{{ url_for('createpost') }}">
+            Create Post
+        </a>
+
+        <a href="{{ url_for('messages') }}">
+            Messages
+        </a>
+    </div>
+
+</nav>
+
+
+
+    <div class="profile-container">
+
+        <!-- User Information -->
+
+        <div class="profile-info">
+
+            <h1>
+                @{{ user.username }}
+            </h1>
+
+            <p>
+                {{ user.bio }}
+            </p>
+
+        </div>
+
+
+        <!-- User Posts -->
+
+        <div class="user-posts">
+
+            <h2>Posts</h2>
+
+            {% for post in posts %}
+
+            <article class="post">
+
+                <p>
+                    {{ post.content }}
+                </p>
+
+                <small>
+                    {{ post.created_at }}
+                </small>
+
+                <p>
+        ❤️ {{ post.likes }} likes
+    </p>
+
+
+            </article>
+
+            {% else %}
+
+            <p>
+                No posts yet.
+            </p>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+    </body>
+
+</html>
+    

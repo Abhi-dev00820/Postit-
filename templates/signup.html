@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postit - Signup</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="Signup">
+    <h1> Posit Signup</h1>
+    <!--Signup Form-->
+<form method="POST" action="{{ url_for('signup') }}">
+    <h2>Username</h2>
+    <input type="text" name="UsernameS" placeholder="Your Username here">
+    <h2>Password</h2>
+    <input type="password" name="PasswordS" placeholder="Your Password here">
+    <input type="submit" value="Sign Up">
+    <h4>Already a User ? <a href="{{ url_for('login') }}">Login</a></h4>
+</form>
+
+{% with messages = get_flashed_messages() %}
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+{% endwith %}
+
+    </div>
+</body>
+</html>
