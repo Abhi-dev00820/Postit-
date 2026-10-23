@@ -142,8 +142,8 @@ While building Postit, I practiced:
 * Git and GitHub workflow
 
 Project BY :-
+Abhi
 
-Roopnarayan
 
 Built as a learning project to strengthen my Python, Flask, backend development, databases, and real-time web application skills.
 
