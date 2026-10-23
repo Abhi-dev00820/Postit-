@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postit - Create Post</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Postit Logo" class="brand-logo">
+            <a href="{{ url_for('index') }}">Postit</a>
+        </div>
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('messages') }}">Messages</a>
+            <a href="{{ url_for('profile', user_id=session['user_id']) }}">Profile</a>
+        </div>
+    </nav>
+
+    <div class="flash-container">
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <div class="flash-message">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+    </div>
+
+    <div class="create-post-card">
+        <h1>Create a Post</h1>
+        <form method="POST" action="{{ url_for('createpost') }}">
+            <h2>Share an Update</h2>
+            <input type="text" name="PostText" placeholder="What's happening?" required>
+            <input type="submit" value="Create Post">
+        </form>
+    </div>
+
+</body>
+</html>

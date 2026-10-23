@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postit - Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="auth-page">
+
+    <div class="Login">
+        <div class="auth-logo-box">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Postit Logo">
+        </div>
+
+        <h1>Postit Login</h1>
+
+        <div class="flash-container">
+            {% with messages = get_flashed_messages() %}
+                {% for message in messages %}
+                    <div class="flash-message">{{ message }}</div>
+                {% endfor %}
+            {% endwith %}
+        </div>
+
+        <form method="POST" action="{{ url_for('login') }}">
+            <h2>Username</h2>
+            <input type="text" name="UsernameL" placeholder="Your Username here" required>
+
+            <h2>Password</h2>
+            <input type="password" name="PasswordL" placeholder="Your Password here" required>
+
+            <input type="submit" value="Log In">
+
+            <h4>Not a User ? <a href="{{ url_for('signup') }}">Signup</a></h4>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postit - Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body data-user-id="{{ user.id }}">
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Postit Logo" class="brand-logo">
+            <a href="{{ url_for('index') }}">Postit</a>
+        </div>
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('messages') }}">Messages</a>
+            <a href="{{ url_for('profile', user_id=session['user_id']) }}">Profile</a>
+        </div>
+    </nav>
+
+    <div class="chat-container">
+        <div class="chat-box">
+            <div class="chat-header">
+                <a href="{{ url_for('messages') }}" class="chat-back-link">&larr; Back</a>
+                <div class="chat-header-user">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="User Avatar" class="chat-user-logo">
+                    <h2>@{{ user.username }}</h2>
+                </div>
+            </div>
+
+            <div class="messages" id="messages">
+                {% for message in messages %}
+                <div class="message">
+                    <strong>@{{ message.sender.username }}</strong>
+                    <p>{{ message.content }}</p>
+                    <small class="message-time">{{ message.created_at }}</small>
+                </div>
+                {% else %}
+                <p>No messages yet.</p>
+                {% endfor %}
+            </div>
+
+            <div class="message-form">
+                <form id="messageForm">
+                    <input type="text" id="messageInput" placeholder="Write a message..." required>
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+    <script>
+        const socket = io();
+        const receiverId = document.body.dataset.userId;
+        const form = document.getElementById("messageForm");
+        const input = document.getElementById("messageInput");
+        const messages = document.getElementById("messages");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            const message = input.value.trim();
+            if (message === "") {
+                return;
+            }
+
+            socket.emit("send_message", {
+                receiver_id: receiverId,
+                message: message
+            });
+
+            input.value = "";
+        });
+    </script>
+</body>
+</html>

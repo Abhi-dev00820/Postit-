@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postit - Feed</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Postit Logo" class="brand-logo">
+            <a href="{{ url_for('index') }}">Postit</a>
+        </div>
+        <div class="nav-links">
+            <a href="{{ url_for('createpost') }}">Create Post</a>
+            <a href="{{ url_for('messages') }}">Messages</a>
+            <a href="{{ url_for('profile', user_id=session['user_id']) }}">Profile</a>
+        </div>
+    </nav>
+
+    <div class="flash-container">
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <div class="flash-message">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+    </div>
+
+    <div class="container">
+        <h1>Feed</h1>
+
+        {% for post in posts %}
+        <article class="post">
+            <div class="username">
+                @{{ post.user.username }}
+            </div>
+            <div class="content">
+                {{ post.content }}
+            </div>
+            <div class="date">
+                {{ post.created_at }}
+            </div>
+            <div class="actions">
+                <button type="button">Like</button>
+                <button type="button">Comment</button>
+                <button type="button">Share</button>
+            </div>
+        </article>
+        {% else %}
+        <p>No posts available.</p>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
